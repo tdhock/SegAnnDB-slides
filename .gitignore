@@ -1,0 +1,15 @@
+figure-*.tex
+figure-*.pdf
+*~
+auto
+Rplots.pdf
+*.toc
+*.snm
+*.out
+*.nav
+*.log
+*.aux
+.Rhistory
+.svn
+tikzMetrics
+figure-*.png

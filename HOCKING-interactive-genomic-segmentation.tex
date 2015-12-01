@@ -1,0 +1,418 @@
+\documentclass{beamer}
+
+\usepackage{tikz}
+\usepackage{booktabs}
+
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+
+\newcommand{\argmin}{\operatorname*{arg\, min}}
+\newcommand{\sign}{\operatorname{sign}}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+
+\DeclareMathOperator*{\maximize}{maximize}
+
+% Set transparency of non-highlighted sections in the table of
+% contents slide.
+\setbeamertemplate{section in toc shaded}[default][100]
+\AtBeginSection[]
+{
+  \setbeamercolor{section in toc}{fg=red} 
+  \setbeamercolor{section in toc shaded}{fg=black} 
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\title{SegAnnDB: interactive genomic segmentation\\
+\url{http://bioviz.rocq.inria.fr/}}
+\newcommand{\acknowledge}[2]{\parbox{1.5in}{ \centering
+\includegraphics[height=0.5in]{photos/#1}\\
+#2
+}}
+\author{
+Toby Dylan Hocking, Toby.Hocking@mail.mcgill.ca\\
+\vskip 1cm
+joint work with Valentina Boeva, Guillem Rigaill, Gudrun Schleiermacher, Isabelle Janoueix-Lerosey, Olivier Delattre, Wilfrid Richer, Franck Bourdeaut, Miyuki Suguro, Masao Seto, Francis Bach, and Jean-Philippe Vert.
+}
+
+%\date{12 April 2013}
+
+\maketitle
+
+\section{Introduction: how to detect changes in copy number?}
+
+\begin{frame}
+  \frametitle{Cancer cells show chromosomal copy number alterations}
+  Spectral karyotypes show the number of copies of the sex chromosomes
+  (X,Y) and autosomes (1-22). 
+
+  Source: Alberts \emph{et al.} 2002.
+\vskip 0.1in
+  \includegraphics[width=\textwidth]{Karyo-both}
+\vskip 0.1in
+  \begin{minipage}{0.4\linewidth}
+    Normal cell with 2 copies of each autosome.
+  \end{minipage}
+\hskip 0.1\linewidth
+  \begin{minipage}{0.4\linewidth}
+Cancer cell with many copy number alterations.
+  \end{minipage}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivation: tumor genome copy number analysis}
+  \begin{itemize}
+  \item Comparative genomic hybridization microarrays (aCGH) allow
+    genome-wide copy number analysis since logratio is proportional to
+    DNA copy number (Pinkel \emph{et al.}, 1998).
+  \item Tumors often contain breakpoints, amplifications, and
+    deletions at specific chromosomal locations that we would like to
+    detect.
+  \item Which genomic alterations are linked with good or bad patient
+    outcome?
+  \item To answer clinical questions like this one, we first need to
+    accurately detect these genomic alterations.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{aCGH neuroblastoma copy number data}
+  
+  \includegraphics[width=\textwidth]{figure-profiles}
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Copy number profiles are predictive of progression in
+    neuroblastoma}
+  
+  Gudrun Schleiermacher, \emph{et al.} Accumulation of Segmental
+  Alterations Determines Progression in Neuroblastoma. J Clinical
+  Oncology 2010.
+
+  2 types of profiles:
+  
+  \begin{itemize}
+  \item Numerical: entire chromosome amplification. \alert{Good}
+    outcome.
+  \item Segmental: deletion 1p 3p 11q, gain 1q 2p 17q. \alert{Bad}
+    outcome. 
+  \end{itemize}
+  \includegraphics[width=\textwidth]{numerical-segmental}
+  
+\end{frame}
+
+\section{Visual breakpoint annotations}
+
+  \begin{frame} \frametitle{Creating breakpoint annotations (demo)}
+    \includegraphics[width=\textwidth]{figure-profiles}
+  \end{frame}
+
+  \begin{frame}
+    \includegraphics[width=\textwidth]{figure-annotations}
+  \end{frame}
+
+  \begin{frame}
+    \includegraphics[width=\textwidth]{figure-annotations-emph}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Annotations for 2 signals}
+    \input{figure-2signals}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 1 segment}
+    \input{figure-2signals1}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 2 segments}
+    \input{figure-2signals2}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 3 segments}
+    \input{figure-2signals3}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 4 segments}
+    \input{figure-2signals4}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 5 segments}
+    \input{figure-2signals5}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Annotation error curves for 2 signals...\\which
+      0-error model is best?}
+    \input{figure-err-k}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Another annotated signal}
+    \includegraphics[width=\textwidth]{figure-segannot}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 1 segment}
+    \includegraphics[width=\textwidth]{figure-segannot-1}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 2 segments}
+    \includegraphics[width=\textwidth]{figure-segannot-2}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 3 segments}
+    \includegraphics[width=\textwidth]{figure-segannot-3}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 4 segments}
+    \includegraphics[width=\textwidth]{figure-segannot-4}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Estimated model with 5 segments}
+
+There are no consistent least squares models.
+
+    \includegraphics[width=\textwidth]{figure-segannot-5}
+    
+     How do we find a consistent model?
+  \end{frame}
+
+\section{SegAnnDB: interactive genomic segmentation}
+
+  \begin{frame}
+    \frametitle{Problems solved by SegAnnDB}
+    \begin{itemize}
+    \item Statistical machine learning problems:\\
+    \begin{tabular}{ccc}
+      \hline
+      Consistent \\
+      Models & Problem & Solution \\
+      \hline
+      1 & none & \\
+      \hline
+      $>1$ & Prediction & Other annotated signals\\
+      &&Hocking \emph{et al.} 2013\\
+      \hline
+      0 & Fitting & SegAnnot: constrained segmentation\\
+      & & Hocking and Rigaill 2012\\
+      \hline
+    \end{tabular}
+    \item Technical problems:
+      \begin{itemize}
+      \item \textbf{Interactive scatterplots}: zooming, annotation,
+        model updates. 
+      \item \textbf{Storage and data export to genome browsers}:
+        probes, user-specific annotations, models.
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Optimal prediction from limited annotations}
+    \begin{itemize}
+    \item \href{http://arxiv.org/abs/1004.0887}{Rigaill 2010. Pruned
+        dynamic programming for optimal multiple change-point
+        detection. arXiv:1004.0887.}
+    $$
+    \begin{aligned}
+      \hat y^k = &\argmin_{\mu\in\RR^d} && ||y-\mu||^2_2\\
+      &\text{such that} && \text{$\mu$ has $k-1$ changes.}
+    \end{aligned}
+    $$
+    \item Pruned dynamic programming solver: 700 lines of C++.
+    \item Python interface: 50 lines of C.
+    \item Consistent models $\subseteq\{\hat y^1,\dots,\hat y^{20}\}$.
+    \item Hocking et al. ICML 2013. Choose the number of segments $k$ using
+      interval regression on the other annotated signals.
+    \item Gradient descent solver: 100 lines of Python, run as a
+      background process.
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Test error decreases as models learns from more
+      labels}
+    \begin{itemize}
+    \item Benchmark: 3642 labeled regions across 3109 chromosomes.
+    \item Train on a few chromosomes, test on the rest.
+    \item Mean and SD over 60 random train set orderings.
+    \end{itemize}
+    \input{figure-test-error-decreases}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Optimal fitting for any annotations}
+    \begin{itemize}
+    \item \href{http://hal.inria.fr/hal-00759129/}{Hocking and Rigaill
+        2012. SegAnnot: fast segmentation of
+        annotated piecewise constant signals. HAL-00759129.}
+    $$
+    \begin{aligned}
+      &\argmin_{\mu\in\RR^d} && ||y-\mu||^2_2\\
+      &\text{such that} && \text{$\mu$ has 1 change in each
+        1breakpoint region.}
+    \end{aligned}
+    $$
+    \item Dynamic programming solver: 200 lines of C.
+    \item Python interface: 100 lines of C.
+    \end{itemize}
+    
+      Demo of optimal fitting on \url{http://bioviz.rocq.inria.fr}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Interactive zoomable scatterplots}
+    \begin{itemize}
+    \item On data upload, draw 5 sizes of PNG scatterplots using
+      Python Imaging Library: 10Kb--1Mb for a sequence of 150,000
+      points.
+    \item Test your browser-dependent image size limit\\
+      \url{http://sugiyama-www.cs.titech.ac.jp/~toby/images/}
+    \item For a plot, first render PNG scatterplot as the background
+      of an SVG element.
+    \item Then ask the server for the current regions/model, and draw
+      with SVG.
+    \item When client changes annotations, save on server and send
+      model back to client.
+    \item 500 lines of Javascript/D3.
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Data storage and export}
+    \begin{itemize}
+    \item Web server/database: 1500 lines of Python.
+    \item Berkeley DB: small fast NoSQL database.
+    \item DB[key] = value, key is text, value is anything.
+    \item Pyramid web framework exports data in
+      \begin{itemize}
+      \item JSON for plotted regions/model.
+      \item bed/bedGraph for UCSC genome browser.
+      \item CSV for R, etc.
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+\section{Discussion and conclusions}
+
+\begin{frame}
+  \frametitle{Discussion: SegAnnDB uses computer vision for genomic data}
+  \begin{tabular}{ccc}
+    Photos & Cell images & Copy number profiles \\
+    \includegraphics[width=1.3in]{faces} &
+    \includegraphics[width=1.3in]{cellprofiler} &
+    \includegraphics[width=1.5in]{regions-axes}\\
+    Labels: names & phenotypes & alterations \\ \\
+    CVPR 2013 & CellProfiler & SegAnnDB \\
+    246 papers & 873 citations & Hocking et al, 2014. \\
+    &
+  \end{tabular}
+  Demo: \url{http://bioviz.rocq.inria.fr}\\
+  Sources: \url{http://en.wikipedia.org/wiki/Face_detection}\\
+  Jones et al PNAS 2009. Scoring diverse cellular morphologies in
+  image-based screens with iterative feedback and machine learning.
+\end{frame}
+
+  \begin{frame}
+    \frametitle{Discussion: un-supervised versus supervised learning}
+    \begin{itemize}
+    \item Biologists can easily locate breakpoints and noise in plots
+      of the data.
+    \item \textbf{Statistics/un-supervised learning}: 
+      first estimate breakpoint locations from data,
+      then plot both to see if breakpoints (over- or under-)fit.
+    \item \textbf{Computer vision/supervised learning}:
+      first label regions with and without breakpoints, 
+      then predict breakpoints that minimize the number of incorrect labels.
+    \item Exploit strong points of eyes (signal/noise) and
+      mathematical optimization (finding the exact breakpoint).
+    \item Advantage: supervised methods more accurate.
+    \item Disadvantage: need time/expertise to make labels.
+    \end{itemize}    
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Conclusions/availability}
+    \begin{itemize}
+    \item \textbf{Interactive:} SegAnnDB is the first genomic data
+      analysis system with a model that is updated based on
+      user-provided labels.
+    \item \textbf{Accurate:} optimization algorithms are used to find
+      the best model for a given set of labels.
+    \item \textbf{Demo}: live on \url{http://bioviz.rocq.inria.fr/}\\
+      (labeling OK, data set uploads not).
+    \item \textbf{Available:} for analyzing your own data, install the
+      free/open-source code on your own server/laptop:
+
+      \url{https://github.com/tdhock/SegAnnDB}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Help: future work}
+
+    \begin{itemize}
+    \item \textbf{Active learning}.\\
+      Can we do better than random sampling?
+    \item \textbf{Crowdsourcing}.\\
+      If every one of you labels one profile, how do we learn a global
+      model?
+    \end{itemize}
+
+    email me at Toby.Hocking@mail.mcgill.ca to collaborate!
+
+  \end{frame}
+
+\begin{frame}
+  \frametitle{But which model is the best?}
+  \begin{itemize}
+  \item GLAD: adaptive weights smoothing (Hup\'e \emph{et al.}, 2004)
+  \item DNAcopy: circular binary segmentation (Venkatraman and Olshen,
+    2007)
+  \item cghFLasso: fused lasso signal approximator with heuristics
+    (Tibshirani and Wang, 2007)
+  \item HaarSeg: wavelet smoothing (Ben-Yaacov and Eldar, 2008)
+  \item GADA: sparse Bayesian learning (Pique-Regi \emph{et al.}, 2008)
+  \item flsa: fused lasso signal approximator path algorithm (Hoefling 2009)
+  \item \alert<2>{cghseg: pruned dynamic programming (Rigaill 2010)}
+  \item \alert<2>{PELT: pruned exact linear time (Killick \emph{et al.}, 2011)}
+  \end{itemize}
+  \alert<2>{Visual annotations indicate that maximum likelihood
+    segmentation is the best (Hocking \emph{et al.}, 2012).}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{The cghseg.k/pelt.n least squares model}
+    For a signal $y\in\RR^d$, the maximum
+    likelihood model with $k\in\{1,\dots,d\}$ segments is
+    $$
+    \begin{aligned}
+ \hat y^k=     &\argmin_{\mu\in\RR^d} && ||y-\mu||^2_2\\
+      &\text{such that} && \text{$\mu$ has $k-1$ changes.}
+%      &\text{subject to} && k-1 = \sum_{j=1}^{d-1}1_{\mu_{j}\neq\mu_{j+1}}
+    \end{aligned}
+    $$
+    We select the number of segments $k$ using \textbf{visual
+      annotations}.
+  \end{frame}
+
+
+
+\end{document}
