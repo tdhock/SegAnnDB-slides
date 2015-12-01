@@ -1,0 +1,17 @@
+SegAnnDB: interactive genomic segmentation
+
+[[file:HOCKING-interactive-genomic-segmentation.pdf][Slides]] that explain the novelty of the SegAnnDB system:
+- The first system which allows the user to interactively add/update
+  breakpoint and copy number labels on scatterplots of DNA copy number
+  data.
+- How to predict the breakpoint locations when there is more than one
+  maximum likelihood segmentation model which is consistent with the
+  labels for the current data set?  [[http://jmlr.org/proceedings/papers/v28/hocking13.html][A max-margin interval regression
+  algorithm is used to learn a penalty function using all the labeled
+  data sets]]. Importantly, the model gets more accurate as you label
+  more data sets.
+- How to determine breakpoint locations when there are no maximum
+  likelihood segmentation models which are consistent with the labels
+  for the current data set? [[https://hal.inria.fr/hal-00759129][The SegAnnot constrained segmentation
+  model is used to find the most likely breakpoints which are
+  consistent with the labels]].
